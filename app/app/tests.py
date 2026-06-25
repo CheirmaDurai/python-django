@@ -5,6 +5,7 @@ Test cases for the calculator function.
 from django.test import SimpleTestCase
 from app import calculator
 
+
 class CalculatorTests(SimpleTestCase):
     """Tests for the calculator function."""
 

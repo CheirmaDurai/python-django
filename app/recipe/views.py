@@ -41,7 +41,6 @@ from recipe import serializers
         ]
     )
 )
-
 class RecipeViewSet(viewsets.ModelViewSet):
     """View for manage recipe APIs."""
     serializer_class = serializers.RecipeDetailSerializer
@@ -52,7 +51,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def _params_to_ints(self, qs):
         """Convert a list of strings to integers."""
         return [int(str_id) for str_id in qs.split(',')]
-
 
     def get_queryset(self):
         """Retrieve recipes for authenticated user."""
@@ -127,6 +125,7 @@ class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,
         return queryset.filter(
             user=self.request.user
         ).order_by('-name').distinct()
+
 
 class TagViewSet(BaseRecipeAttrViewSet):
     """Manage tags in the database."""

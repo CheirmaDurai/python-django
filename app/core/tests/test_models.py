@@ -3,11 +3,10 @@ Tests for models.
 """
 from unittest.mock import patch
 from decimal import Decimal
-
 from django.test import TestCase
 from django.contrib.auth import get_user_model
-
 from core import models
+
 
 def create_user(email='user@example.com', password='testpass123'):
     """Create a return a new user."""
@@ -79,7 +78,6 @@ class ModelTests(TestCase):
 
         self.assertEqual(str(tag), tag.name)
 
-
     def test_create_ingredient(self):
         """Test creating an ingredient is successful."""
         user = create_user()
@@ -89,7 +87,6 @@ class ModelTests(TestCase):
         )
 
         self.assertEqual(str(ingredient), ingredient.name)
-
 
     @patch('core.models.uuid.uuid4')
     def test_recipe_file_name_uuid(self, mock_uuid):

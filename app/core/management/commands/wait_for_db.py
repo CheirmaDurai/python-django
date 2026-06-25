@@ -20,8 +20,9 @@ class Command(BaseCommand):
             except (psycopg2_OperationalError, OperationalError):
                 attempts += 1
                 self.stdout.write(
-                    f'Database unavailable, waiting 1 second... (attempt {attempts})'
+                    f'Database unavailable, waiting 1 second... \
+                        (attempt {attempts})'
                 )
                 time.sleep(1)
-        
+
         self.stdout.write(self.style.SUCCESS('Database available!'))

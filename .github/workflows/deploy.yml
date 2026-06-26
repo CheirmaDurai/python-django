@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    name: "Test and Deploy"
+    name: "Test and Deploy to EC2"
     runs-on: ubuntu-24.04
     steps:
       - name: Login to Docker Hub

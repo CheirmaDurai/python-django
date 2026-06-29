@@ -4,12 +4,33 @@ name: "Deploy to EC2"
 on:
   push:
     branches:
+      - dev
       - main
 
+concurrency:
+  group: deployment
+  cancel-in-progress: true
+
 jobs:
+  setup-env:
+    runs-on: ubuntu-24.04
+    outputs:
+      target_env: ${{ steps.set-env.outputs.target_env }}
+    steps:
+      - name: "Identify target environment"
+        id: set-env
+        run: |
+          if [ "${{ github.ref_name }}" = "dev" ]; then
+            echo "target_env=development" >> $GITHUB_OUTPUT
+          else
+            echo "target_env=production" >> $GITHUB_OUTPUT
+          fi
   deploy:
+    needs: setup-env
     name: "Test and Deploy to EC2"
     runs-on: ubuntu-24.04
+    environment:
+      name: ${{ needs.setup-env.outputs.target_env }}
     steps:
       - name: Login to Docker Hub
         uses: docker/login-action@v4
@@ -22,6 +43,11 @@ jobs:
         run: docker compose run --rm app sh -c "python manage.py wait_for_db && python manage.py test"
       - name: Lint
         run: docker compose run --rm app sh -c "flake8 ."
+      - name: "Environment Details"
+        run: |
+          echo "Deploying branch ${{ github.ref_name }} to ${{ needs.setup-env.outputs.target_env }}"
+          echo "Value of configured environment variable DEBUG - ${{ vars.DEBUG }}"
+          echo "Value of configured environment secrets ACCESS_KEY - ${{ secrets.ACCESS_KEY }}"
       - name: Deploy via SSH (AWS EC2)
         uses: appleboy/ssh-action@v1.2.0
         with:

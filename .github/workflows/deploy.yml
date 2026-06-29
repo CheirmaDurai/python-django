@@ -18,10 +18,10 @@ jobs:
       - name: "Identify target environment"
         id: set-env
         run: |
-          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
-            echo "target_env=production" >> $GITHUB_OUTPUT
-          else
+          if [ "${{ github.ref_name }}" = "dev" ]; then
             echo "target_env=development" >> $GITHUB_OUTPUT
+          else
+            echo "target_env=production" >> $GITHUB_OUTPUT
           fi
   deploy:
     needs: setup-env

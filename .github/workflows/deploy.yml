@@ -5,9 +5,11 @@ on:
   push:
     branches:
       - dev
-  pull_request:
-    branches:
       - main
+
+concurrency:
+  group: deployment
+  cancel-in-progress: true
 
 jobs:
   setup-env:
@@ -46,8 +48,6 @@ jobs:
           echo "Deploying branch ${{ github.ref_name }} to ${{ needs.setup-env.outputs.target_env }}"
           echo "Value of configured environment variable DEBUG - ${{ vars.DEBUG }}"
           echo "Value of configured environment secrets ACCESS_KEY - ${{ secrets.ACCESS_KEY }}"
-          echo "Pull request: Source branch: ${{ github.event.pull_request.head.ref }}"
-          echo "Pull request: Target branch: ${{ github.event.pull_request.base.ref }}"
       - name: Deploy via SSH (AWS EC2)
         uses: appleboy/ssh-action@v1.2.0
         with:

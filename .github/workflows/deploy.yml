@@ -37,33 +37,33 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v6
-      # - name: Test
-        # run: docker compose run --rm app sh -c "python manage.py wait_for_db && python manage.py test"
-      # - name: Lint
-      #   run: docker compose run --rm app sh -c "flake8 ."
-      - name: "Environment"
+      - name: Test
+        run: docker compose run --rm app sh -c "python manage.py wait_for_db && python manage.py test"
+      - name: Lint
+        run: docker compose run --rm app sh -c "flake8 ."
+      - name: "Environment Details"
         run: |
           echo "Deploying branch ${{ github.ref_name }} to ${{ needs.setup-env.outputs.target_env }}"
           echo "Value of configured environment variable DEBUG - ${{ vars.DEBUG }}"
           echo "Value of configured environment secrets ACCESS_KEY - ${{ secrets.ACCESS_KEY }}"
           echo "Pull request: Source branch: ${{ github.event.pull_request.head.ref }}"
           echo "Pull request: Target branch: ${{ github.event.pull_request.base.ref }}"
-      # - name: Deploy via SSH (AWS EC2)
-      #   uses: appleboy/ssh-action@v1.2.0
-      #   with:
-      #     host: ${{ secrets.EC2_HOST }}
-      #     username: ${{ secrets.EC2_USER }}
-      #     key: ${{ secrets.EC2_SSH_KEY }}
-      #     port: ${{ secrets.EC2_PORT }}
-      #     script: |
-      #       cd /home/ec2-user/python-django
-      #       echo "Connected to EC2 instance. Starting deployment..."
-      #       git fetch origin main
-      #       git checkout main
-      #       echo "Pulling latest changes from main branch..."
-      #       git pull origin main
+      - name: Deploy via SSH (AWS EC2)
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_PORT }}
+          script: |
+            cd /home/ec2-user/python-django
+            echo "Connected to EC2 instance. Starting deployment..."
+            git fetch origin main
+            git checkout main
+            echo "Pulling latest changes from main branch..."
+            git pull origin main
 
-      #       echo "Stopping and removing existing containers..."
-      #       docker compose -f docker-compose-deploy.yml down
-      #       echo "Starting new containers with updated code..."
-      #       docker compose -f docker-compose-deploy.yml up -d --build
+            echo "Stopping and removing existing containers..."
+            docker compose -f docker-compose-deploy.yml down
+            echo "Starting new containers with updated code..."
+            docker compose -f docker-compose-deploy.yml up -d --build

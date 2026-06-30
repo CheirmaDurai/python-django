@@ -57,7 +57,7 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           script: |
             cd /home/ec2-user/python-django
-            echo "Connected to EC2 instance. Starting deployment..."
+            echo "Connected to EC2 instance. Starting deployment ..."
             git fetch origin main
             git checkout main
             echo "Pulling latest changes from main branch..."

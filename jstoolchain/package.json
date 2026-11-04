@@ -1,0 +1,17 @@
+{
+  "name": "jstoolchain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch:pages": "npx @tailwindcss/cli -i ./static/src/input.css -o ../pages/static/pages/css/output.css --watch",
+    "watch": "npm run watch:pages"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "tailwindcss": "^4.3.4"
+  }
+}

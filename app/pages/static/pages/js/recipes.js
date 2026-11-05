@@ -105,7 +105,7 @@ const productItems = [
     new ProductItem(3, "Plain Dosa", "Crispy", 39.99),
     new ProductItem(4, "Veg Combo", "Delicious vegetable combo", 49.99),
     new ProductItem(5, "Non-Veg Combo", "Chicken + Egg", 59.99),
-    new ProductItem(6, "Cold Drinks Combo", "Bovonto + Sprite", 69.99),
+    new ProductItem(6, "Cool Drinks Combo", "Bovonto + Sprite", 69.99),
 ];
 
 productItems.forEach(item => {

@@ -1,10 +1,19 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <link rel="stylesheet" href="{% static 'pages/css/output.css' %}">
 </head>
-<body>
+<body class="bg-white-100 items-center justify-center min-h-screen">
+    <header>
+        <nav class="flex items-center gap-6 p-4 bg-gray-100 border-b border-gray-200">
+            <a href="/" class="text-gray-600 hover:text-gray-900 font-medium transition-colors">Home</a>
+            <a href="/recipes/" class="text-gray-600 hover:text-gray-900 font-medium transition-colors">Recipes</a>
+            <a href="/admin/login/" class="text-gray-600 hover:text-gray-900 font-medium transition-colors">Admin Login</a>
+        </nav>
+    </header>
     <h1>Welcome to Our Static Page!</h1>
     <p>This page is served directly by Django without pulling data from a database.</p>
 </body>

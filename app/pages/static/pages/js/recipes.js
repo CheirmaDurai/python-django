@@ -15,19 +15,19 @@ class ProductItem extends Product {
 
     render = () => {
         const htmlString = `
-            <div class="product grid grid-cols-1 p-4 gap-2 md:grid-cols-4 md:p-0 md:gap-0 md:items-center hover:bg-gray-50 transition" data-id="${this.id}">
-                <div class="md:p-4 text-gray-500">
+            <div class="product grid grid-cols-1 p-4 gap-4 text-gray-500 md:grid-cols-4 md:gap-0 md:items-center hover:bg-gray-50 transition" data-id="${this.id}">
+                <div>
                     <div class="product-name">${this.name}</div>
                     <div class="product-description">${this.description}</div>
                 </div>
-                <div class="product-price md:p-4 text-gray-500">${this.price.toFixed(2)}</div>
-                <div class="status md:p-4 text-gray-500">
+                <div class="product-price">${this.price.toFixed(2)}</div>
+                <div class="status">
                     <!-- <span
                                     class="inline-flex items-center text-amber-700 bg-amber-50 px-2 py-1 rounded text-xs font-semibold border border-amber-200">Low
                                     Stock</span> -->
                     <span class="inline-flex items-center text-green-700 bg-green-50 px-2 py-1 rounded text-xs font-semibold border border-green-200">In Stock</span>
                 </div>
-                <div class="actions md:p-4 text-gray-500">
+                <div class="actions">
                     <button id="btn-add-to-cart" class="add-to-cart bg-green-100 hover:bg-gray-100 text-green-700 p-4">Add to Cart</button>
                 </div>
             </div>
@@ -84,12 +84,12 @@ class Cart {
 
         this.items.forEach(item => {
             const htmlString = `
-                <div class="grid grid-cols-4 gap-4 p-4 cart-product" data-id="${item.id}">
+                <div class="cart-product grid grid-cols-1 p-4 gap-2 text-gray-500 md:grid-cols-4 md:gap-0 md:items-center hover:bg-gray-50 transition" data-id="${item.id}">
                     <div class="product-name">${item.name}</div>
-                    <div class="product-price">${item.price.toFixed(2)}</div>
-                    <div class="product-quantity">${item.quantity}</div>
+                    <div class="product-price text-center">${item.price.toFixed(2)}</div>
+                    <div class="product-quantity text-center">${item.quantity}</div>
                     <div class="button-container">
-                        <button id="btn-remove-from-cart" class="remove-from-cart bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition duration-200">Remove</button>
+                        <button id="btn-remove-from-cart" class="remove-from-cart bg-green-100 hover:bg-gray-100 text-green-700 p-4 text-xs">Remove</button>
                     </div>
                 </div>
             `;

@@ -133,4 +133,7 @@ recipesPromise.then((recipes) => {
     });
 }).catch((error) => {
     console.error("Error loading products:", error);
+    return error; // Return the error to propagate it to the next .then() in the chain
+}).then((error) => {
+    console.log("Promise chain completed.", error ? "Error occurred: " + error.message : "No errors.");
 });

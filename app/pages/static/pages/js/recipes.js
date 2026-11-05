@@ -15,14 +15,20 @@ class ProductItem extends Product {
 
     render = () => {
         const htmlString = `
-            <div class="grid grid-cols-4 gap-4 p-4 product" data-id="${this.id}">
-                <div class="col-span-2">
+            <div class="product grid grid-cols-1 p-4 gap-2 md:grid-cols-4 md:p-0 md:gap-0 md:items-center hover:bg-gray-50 transition" data-id="${this.id}">
+                <div class="md:p-4 text-gray-500">
                     <div class="product-name">${this.name}</div>
                     <div class="product-description">${this.description}</div>
                 </div>
-                <div class="col-span-1 product-price">${this.price.toFixed(2)}</div>
-                <div class="col-span-1 button-container">
-                    <button id="btn-add-to-cart" class="add-to-cart bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition duration-200">Add to Cart</button>
+                <div class="product-price md:p-4 text-gray-500">${this.price.toFixed(2)}</div>
+                <div class="status md:p-4 text-gray-500">
+                    <!-- <span
+                                    class="inline-flex items-center text-amber-700 bg-amber-50 px-2 py-1 rounded text-xs font-semibold border border-amber-200">Low
+                                    Stock</span> -->
+                    <span class="inline-flex items-center text-green-700 bg-green-50 px-2 py-1 rounded text-xs font-semibold border border-green-200">In Stock</span>
+                </div>
+                <div class="actions md:p-4 text-gray-500">
+                    <button id="btn-add-to-cart" class="add-to-cart bg-green-100 hover:bg-gray-100 text-green-700 p-4">Add to Cart</button>
                 </div>
             </div>
         `;

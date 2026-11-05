@@ -22,7 +22,7 @@ class ProductItem extends Product {
                 </div>
                 <div class="product-price">${this.price.toFixed(2)}</div>
                 <div class="actions">
-                    <button id="btn-add-to-cart" class="add-to-cart bg-green-100 hover:bg-gray-100 text-green-700 p-4">Add to Cart</button>
+                    <button id="btn-add-to-cart" class="add-to-cart bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-200">Add to Cart</button>
                 </div>
             </div>
         `;
@@ -75,25 +75,28 @@ class Cart {
         cartList.innerHTML = "";
 
         let totalAmount = 0;
+        let totalQuantity = 0;
 
         this.items.forEach(item => {
             const htmlString = `
                 <div class="cart-product grid grid-cols-1 p-4 gap-2 text-gray-500 md:grid-cols-4 md:gap-0 md:items-center hover:bg-gray-50 transition" data-id="${item.id}">
                     <div class="product-name">${item.name}</div>
-                    <div class="product-price text-center">${item.price.toFixed(2)}</div>
-                    <div class="product-quantity text-center">${item.quantity}</div>
+                    <div class="product-quantity">${item.quantity}</div>
+                    <div class="product-price">${item.price.toFixed(2)}</div>
                     <div class="button-container">
-                        <button id="btn-remove-from-cart" class="remove-from-cart bg-green-100 hover:bg-gray-100 text-green-700 p-4 text-xs">Remove</button>
+                        <button id="btn-remove-from-cart" class="remove-from-cart bg-red-500 hover:bg-red-600 text-white p-2 rounded transition duration-200">Remove</button>
                     </div>
                 </div>
             `;
             cartList.insertAdjacentHTML("beforeend", htmlString);
             totalAmount += item.price * item.quantity;
+            totalQuantity += item.quantity;
 
             this.attachedRemoveEventListener(item.id);
         });
 
         document.getElementById("total-amount").textContent = totalAmount.toFixed(2);
+        document.getElementById("total-quantity").textContent = totalQuantity;
     }
 }
 

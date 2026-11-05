@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @source "../../../**/*.html";
+@source "../../../**/*.js";
 
 /* 
   If you need custom configurations (like custom colors or fonts) 

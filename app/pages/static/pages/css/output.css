@@ -187,8 +187,17 @@
   }
 }
 @layer utilities {
+  .fixed {
+    position: fixed;
+  }
   .static {
     position: static;
+  }
+  .inset-x-0 {
+    inset-inline: 0px;
+  }
+  .bottom-0 {
+    bottom: 0px;
   }
   .col-span-2 {
     grid-column: span 2 / span 2;

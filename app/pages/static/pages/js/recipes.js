@@ -111,9 +111,26 @@ const productItems = [
     new ProductItem(6, "Cool Drinks Combo", "Bovonto + Sprite", 69.99),
 ];
 
-productItems.forEach(item => {
-    item.render();
-    item.attachEventListeners();
+// productItems.forEach(item => {
+//     item.render();
+//     item.attachEventListeners();
+// });
+
+let recipesPromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve(productItems);
+    }, 1000);
+
+    // throw new Error("Exception occurred."); // Trigger the rejection of the promise
+    // reject(new Error("Failed to load products"));
 });
 
-
+recipesPromise.then((recipes) => {
+    console.log("Products loaded:", recipes);
+    recipes.forEach(item => {
+        item.render();
+        item.attachEventListeners();
+    });
+}).catch((error) => {
+    console.error("Error loading products:", error);
+});

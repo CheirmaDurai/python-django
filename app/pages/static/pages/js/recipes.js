@@ -102,34 +102,61 @@ class Cart {
 
 const cart = new Cart();
 
-const productItems = [
-    new ProductItem(1, "Meals", "White rice + pappad", 19.99),
-    new ProductItem(2, "Idly", "Buy 3 + Get 1 Free", 29.99),
-    new ProductItem(3, "Plain Dosa", "Crispy", 39.99),
-    new ProductItem(4, "Veg Combo", "Delicious vegetable combo", 49.99),
-    new ProductItem(5, "Non-Veg Combo", "Chicken + Egg", 59.99),
-    new ProductItem(6, "Cool Drinks Combo", "Bovonto + Sprite", 69.99),
-];
+function fallbackRecipes() {
+    const productItems = [
+        new ProductItem(1, "Meals", "White rice + pappad", 19.99),
+        new ProductItem(2, "Idly", "Buy 3 + Get 1 Free", 29.99),
+        new ProductItem(3, "Plain Dosa", "Crispy", 39.99),
+        new ProductItem(4, "Veg Combo", "Delicious vegetable combo", 49.99),
+        new ProductItem(5, "Non-Veg Combo", "Chicken + Egg", 59.99),
+        new ProductItem(6, "Cool Drinks Combo", "Bovonto + Sprite", 69.99),
+    ];
 
-function getRecipesPromise() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve(productItems);
         }, 1000);
-
-        // throw new Error("Exception occurred."); // Trigger the rejection of the promise
-        // reject(new Error("Failed to load products"));
     });
+}
+
+function getRecipesPromise() {
+    return fetch("http://127.0.0.1:8000/api/recipe/recipes/", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Token 894ed3fa362731574212f39b4e320b804f19896f"
+        }
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        return response.json();
+    }).then(data => {
+        let productItems = [];
+        data.forEach(item => {
+            const productItem = new ProductItem(item.id, item.title, item.description, parseFloat(item.price));
+            productItems.push(productItem);
+        });
+        return productItems;
+    }).catch(error => {
+        console.error("Error fetching recipes:", error);
+    });
+}
+
+function displayRecipes(recipes) {
+    recipes.forEach(item => {
+        item.render();
+        item.attachEventListeners();
+    });
+    document.getElementById("spinner").classList.toggle("hidden");
 }
 
 async function renderRecipes() {
     try {
+        // const recipes = await Promise.any([getRecipesPromise(), fallbackRecipes()]);
         const recipes = await getRecipesPromise();
-        recipes.forEach(item => {
-            item.render();
-            item.attachEventListeners();
-        });
-        document.getElementById("spinner").classList.toggle("hidden");
+        displayRecipes(recipes);
     } catch(error) {
         console.error("Error loading recipes:", error);
         document.getElementById("products").innerHTML = `

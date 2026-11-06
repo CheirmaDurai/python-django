@@ -111,36 +111,31 @@ const productItems = [
     new ProductItem(6, "Cool Drinks Combo", "Bovonto + Sprite", 69.99),
 ];
 
-// productItems.forEach(item => {
-//     item.render();
-//     item.attachEventListeners();
-// });
+function getRecipesPromise() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(productItems);
+        }, 1000);
 
-let recipesPromise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-        resolve(productItems);
-    }, 1000);
+        // throw new Error("Exception occurred."); // Trigger the rejection of the promise
+        // reject(new Error("Failed to load products"));
+    });
+}
 
-    // throw new Error("Exception occurred."); // Trigger the rejection of the promise
-    // reject(new Error("Failed to load products"));
-});
-
-console.log("Promise Initialized but not resolved...");
-function renderProducts() {
-    recipesPromise.then((recipes) => {
-        console.log("Products loaded:", recipes);
+async function renderRecipes() {
+    try {
+        const recipes = await getRecipesPromise();
         recipes.forEach(item => {
             item.render();
             item.attachEventListeners();
         });
         document.getElementById("spinner").classList.toggle("hidden");
-    }).catch((error) => {
-        console.error("Error loading products:", error);
-        return error; // Return the error to propagate it to the next .then() in the chain
-    }).then((error) => {
-        console.log("Promise chain completed.", error ? "Error occurred: " + error.message : "No errors.");
-    });
+    } catch(error) {
+        console.error("Error loading recipes:", error);
+        document.getElementById("products").innerHTML = `
+            <div class='text-red-500 text-center p-4'>Failed to load recipes. Please try again later.</div>
+        `;
+    }
 }
 
-renderProducts();
-console.log("Promise logic completed...");
+renderRecipes();

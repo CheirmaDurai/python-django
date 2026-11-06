@@ -131,6 +131,7 @@ recipesPromise.then((recipes) => {
         item.render();
         item.attachEventListeners();
     });
+    document.getElementById("spinner").classList.toggle("hidden");
 }).catch((error) => {
     console.error("Error loading products:", error);
     return error; // Return the error to propagate it to the next .then() in the chain

@@ -125,16 +125,22 @@ let recipesPromise = new Promise((resolve, reject) => {
     // reject(new Error("Failed to load products"));
 });
 
-recipesPromise.then((recipes) => {
-    console.log("Products loaded:", recipes);
-    recipes.forEach(item => {
-        item.render();
-        item.attachEventListeners();
+console.log("Promise Initialized but not resolved...");
+function renderProducts() {
+    recipesPromise.then((recipes) => {
+        console.log("Products loaded:", recipes);
+        recipes.forEach(item => {
+            item.render();
+            item.attachEventListeners();
+        });
+        document.getElementById("spinner").classList.toggle("hidden");
+    }).catch((error) => {
+        console.error("Error loading products:", error);
+        return error; // Return the error to propagate it to the next .then() in the chain
+    }).then((error) => {
+        console.log("Promise chain completed.", error ? "Error occurred: " + error.message : "No errors.");
     });
-    document.getElementById("spinner").classList.toggle("hidden");
-}).catch((error) => {
-    console.error("Error loading products:", error);
-    return error; // Return the error to propagate it to the next .then() in the chain
-}).then((error) => {
-    console.log("Promise chain completed.", error ? "Error occurred: " + error.message : "No errors.");
-});
+}
+
+renderProducts();
+console.log("Promise logic completed...");
